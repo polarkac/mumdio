@@ -1,4 +1,4 @@
-from urllib.parse import urlparse, parse_qs
+﻿from urllib.parse import urlparse, parse_qs
 from django import forms
 from Mumdio import wsgi
 
@@ -12,10 +12,10 @@ class UpdateListForm(forms.Form):
         hostname = parsed_url.hostname
         query = parse_qs(parsed_url.query)
         if not (hostname == "youtube.com" or hostname == "www.youtube.com"):
-            raise forms.ValidationError("That is not an youtube url!", code='noUrls')
+            raise forms.ValidationError("You have to type a correct YouTube video URL.", code='noUrls')
         if not ('v' in query):
             raise forms.ValidationError(
-                "You are missing video ID!", code='missing_video_id'
+                "URL is missing a video ID.", code='missing_video_id'
             )
 
         self.link = tx
