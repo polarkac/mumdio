@@ -17,6 +17,8 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Mumdio.settings")
 
+from django.conf import settings
+
 class QueueWorker(threading.Thread):
     def __init__(self, q, ql, *args, **kwargs):
         self.q = q
@@ -27,11 +29,15 @@ class QueueWorker(threading.Thread):
         while True:
             item = self.q.get()
             quu_list.remove(item)
-            audio_url = subprocess.check_output(args=["youtube-dl", "-x", "-g", item]).decode().replace('\n', '')
+            audio_url = subprocess.check_output(
+                args=["youtube-dl", "-x", "-g", item]
+            )
+            audio_url = audio_url.decode("utf-8").strip()
             print(audio_url)
-            subprocess.call(args=["D:\\VLC Media Player\\vlc.exe", audio_url, "vlc://quit"])
+            arguments = [settings.PLAYER_PATH] + settings.PLAYER_ARGS + [audio_url]
+            subprocess.call(args=arguments)
             self.q.task_done()
-            print("URL " + item + " has finished!");
+            print("URL {!r} has finished!".format(item));
             time.sleep(0.5)
 
 quu = queue.Queue()
