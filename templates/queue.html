@@ -1,16 +1,16 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <form method="post">
             {{ form.as_table }}
             <button>Add</button>
             {% csrf_token %}
         </form>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         In queue:
         <table class="table" id="qt">
             <tr><td class="bold">Tasks</td><td><span id="tasks-num">0</span></td></tr>

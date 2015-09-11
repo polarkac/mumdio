@@ -1,4 +1,4 @@
-﻿html {
+html {
     position: relative;
     min-height: 100%;
 }
@@ -9,6 +9,11 @@ body {
 
 canvas {
     width: 100%;
+}
+
+input {
+    margin: 5px;
+    width: 50%;
 }
 
 .main-container {
