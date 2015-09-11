@@ -1,27 +1,9 @@
-﻿from django.shortcuts import render
-from django.views.generic.edit import FormView
-from django import forms
-from django.forms import Form
+﻿from django.views.generic.edit import FormView
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
 import json
 from Mumdio import wsgi
-
-class UpdateListForm(Form):
-    text = forms.URLField(label='Youtube URL')
-
-    def clean_text(self):
-        tx = self.cleaned_data['text']
-        if not ("youtube.com" in tx and "v=" in tx):
-            raise forms.ValidationError("That is not an youtube url!", code='noUrls')
-
-        self.link = tx
-
-        return tx
-
-    def save(self, request):
-        wsgi.quu_list.append(self.link)
-        wsgi.quu.put(self.link)       
+from mumble_radio.forms import UpdateListForm
 
 class UpdateListView(FormView):
     template_name = 'queue.html'
